@@ -1,4 +1,132 @@
-/* --- New styles for Sign In / Sign Up tabs --- */
+/* ----------------------------------------- */
+/* 🔥 Global Theme + Variables               */
+/* ----------------------------------------- */
+:root {
+    --bg: #0f172a;           /* Deep navy */
+    --bg-light: #1e293b;
+    --card: #1e2535;
+    --glass: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.08);
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #6366f1;       /* Violet */
+    --accent-light: #818cf8;
+    --radius: 12px;
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", sans-serif;
+}
+
+/* ----------------------------------------- */
+/* Layout Containers                         */
+/* ----------------------------------------- */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* ----------------------------------------- */
+/* Header                                    */
+/* ----------------------------------------- */
+header {
+    width: 100%;
+    background: var(--glass);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav button {
+    margin-left: 15px;
+}
+
+/* ----------------------------------------- */
+/* Buttons                                   */
+/* ----------------------------------------- */
+.btn {
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    border: none;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.btn:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+}
+
+/* Soft secondary button */
+.btn-outline {
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--muted);
+    background: transparent;
+    color: var(--text);
+}
+
+.btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent-light);
+}
+
+/* ----------------------------------------- */
+/* Cards                                     */
+/* ----------------------------------------- */
+.card {
+    background: var(--card);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+.center {
+    text-align: center;
+}
+
+/* ----------------------------------------- */
+/* Input fields                              */
+/* ----------------------------------------- */
+input {
+    width: 100%;
+    padding: 12px 14px;
+    margin: 10px 0;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: var(--radius);
+}
+
+input:focus {
+    border-color: var(--accent);
+}
+
+/* ----------------------------------------- */
+/* Login / Signup Tabs (your existing CSS)   */
+/* ----------------------------------------- */
 .auth-tabs {
     display: flex;
     justify-content: center;
@@ -6,7 +134,7 @@
     background: var(--glass);
     border-radius: 8px;
     padding: 4px;
-    width: 300px; /* Constrain tab width */
+    width: 300px;
     margin: 0 auto 20px auto;
 }
 
@@ -23,8 +151,8 @@
 }
 
 .tab-btn.active {
-    background: var(--card); /* Darker background for active tab */
-    color: #e6eef8; /* Brighter color for active text */
+    background: var(--card);
+    color: #e6eef8;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
@@ -32,6 +160,31 @@
     color: white;
 }
 
+/* ----------------------------------------- */
+/* Interview Room                            */
+/* ----------------------------------------- */
+
+video {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 15px;
+}
+
+.logs {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px;
+    background: var(--glass);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.9em;
+    margin-top: 20px;
+}
+
+/* ----------------------------------------- */
+/* Question Text                              */
+/* ----------------------------------------- */
 .question-text {
     font-size: 1.2em;
     font-weight: 500;
@@ -39,4 +192,406 @@
     padding: 15px;
     background: var(--glass);
     border-radius: var(--radius);
+    margin-bottom: 15px;
+}
+
+/* ----------------------------------------- */
+/* Profile Page                               */
+/* ----------------------------------------- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: var(--glass);
+    padding: 15px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.history-card {
+    background: var(--bg-light);
+    padding: 15px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    margin-bottom: 15px;
+}
+
+.history-card h4 {
+    margin: 0;
+    color: var(--accent-light);
+}
+
+
+/* ----------------------------------------- */
+/* Header Bar                                */
+/* ----------------------------------------- */
+
+.header-bar {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #818cf8, #6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+/* ----------------------------------------- */
+/* Navigation Buttons                         */
+/* ----------------------------------------- */
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-light);
+    transform: translateY(-1px);
+}
+
+.logout-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent-light);
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+
+.logout-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* --- INTERVIEW ROOM --- */
+
+.interview-card {
+    background: var(--card);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 600px;
+    margin: 30px auto;
+    color: white;
+}
+
+.room-title {
+    text-align: center;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+}
+
+.interview-video {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+}
+
+/* Question Box */
+.question-box {
+    margin-top: 10px;
+    padding: 18px;
+    background: var(--glass);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.question-label {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 5px;
+}
+
+.question-text-display {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+/* Buttons */
+.primary-btn {
+    width: 100%;
+    padding: 12px;
+    font-weight: bold;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.25s;
+}
+
+.primary-btn:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent-light);
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.secondary-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Follow-up display */
+.followup {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 0, 0.1);
+    border-left: 3px solid yellow;
+}
+
+/* Logs */
+.log-box {
+    margin-top: 20px;
+    padding: 10px;
+    background: #0f0f0f52;
+    height: 200px;
+    overflow-y: auto;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    border: 1px solid #222;
+}
+
+.log-line {
+    opacity: 0.8;
+    margin-bottom: 3px;
+}
+
+/* --- AUTH CARD --- */
+.auth-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 35px;
+    max-width: 420px;
+    margin: 80px auto;
+    border-radius: 16px;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    color: white;
+}
+
+/* Auth Title */
+.auth-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.auth-subtitle {
+    opacity: 0.7;
+    margin-bottom: 20px;
+}
+
+/* Form */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.input-label {
+    text-align: left;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.input-box {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: rgba(255, 255, 255, 0.06);
+    color: white;
+    outline: none;
+    transition: 0.2s;
+}
+
+.input-box:focus {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+/* Auth Button */
+.auth-btn {
+    margin-top: 10px;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--accent);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.auth-btn:hover {
+    background: var(--accent-light);
+    transform: translateY(-2px);
+}
+
+
+
+/* =======================
+      PROFILE PAGE
+   ======================= */
+
+.profile-container {
+    padding: 25px;
+    max-width: 900px;
+    margin: 20px auto;
+    color: white;
+}
+
+.profile-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* ---- Loading ---- */
+.profile-loading {
+    text-align: center;
+    padding: 40px;
+    color: white;
+    opacity: 0.7;
+}
+
+/* ---- Summary Stats ---- */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-glass {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+}
+
+.stat-glass h4 {
+    font-size: 1rem;
+    opacity: 0.75;
+    margin-bottom: 5px;
+}
+
+.stat-glass p {
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+/* ---- Feedback panel ---- */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 30px;
+    backdrop-filter: blur(12px);
+}
+
+.feedback-text {
+    opacity: 0.9;
+    margin-top: 10px;
+}
+
+/* ---- History ---- */
+.history-title {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.no-history {
+    opacity: 0.7;
+    margin-top: 15px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.06);
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 3px 14px rgba(0,0,0,0.25);
+}
+
+.history-metrics {
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.85;
+    margin: 10px 0;
+}
+
+.history-feedback {
+    margin: 10px 0;
+    opacity: 0.9;
+}
+
+.timestamp {
+    opacity: 0.6;
+    font-size: 0.8rem;
 }
