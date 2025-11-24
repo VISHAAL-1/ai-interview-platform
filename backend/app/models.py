@@ -22,6 +22,8 @@ class Interview(Base):
     ended_at = Column(DateTime, nullable=True)
     score = Column(Float, nullable=True)
     feedback = Column(Text, nullable=True)
+    evaluations = relationship("Evaluation", back_populates="interview")
+
 
     user = relationship("User", back_populates="interviews")
 
@@ -31,3 +33,19 @@ class Question(Base):
     text = Column(Text, nullable=False)
     level = Column(Integer, default=1)
     tags = Column(String, nullable=True)
+
+class Evaluation(Base):
+    __tablename__ = "evaluations"
+
+    id = Column(Integer, primary_key=True, index=True)
+    interview_id = Column(Integer, ForeignKey("interviews.id"))
+    question_text = Column(Text, nullable=False)
+
+    correctness_score = Column(Float, nullable=False)
+    fluency_score = Column(Float, nullable=False)
+    combined_score = Column(Float, nullable=False)
+    feedback = Column(Text, nullable=False)
+
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    interview = relationship("Interview", back_populates="evaluations")

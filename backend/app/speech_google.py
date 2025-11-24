@@ -1,23 +1,36 @@
 from google.cloud import speech
 from google.oauth2 import service_account
+from .config import settings
 import os
 
 def transcribe_audio_google(wav_path: str):
     """
-    Basic synchronous speech-to-text using Google Cloud Speech.
-    User must set GOOGLE_APPLICATION_CREDENTIALS env var or pass creds path.
+    Transcribes WAV audio using Google Cloud Speech-to-Text
+    with EXPLICIT credentials (works reliably in FastAPI).
     """
-    client = speech.SpeechClient()
+
+    # Load the JSON file path from your .env
+    creds_path = settings.GOOGLE_APPLICATION_CREDENTIALS
+
+    if not creds_path or not os.path.exists(creds_path):
+        raise FileNotFoundError(f"Google STT credentials not found at: {creds_path}")
+
+    # Load credentials explicitly
+    credentials = service_account.Credentials.from_service_account_file(creds_path)
+
+    client = speech.SpeechClient(credentials=credentials)
+
     with open(wav_path, "rb") as f:
         audio = speech.RecognitionAudio(content=f.read())
+
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         sample_rate_hertz=16000,
         language_code="en-US",
         enable_automatic_punctuation=True,
     )
+
     response = client.recognize(config=config, audio=audio)
-    transcripts = []
-    for result in response.results:
-        transcripts.append(result.alternatives[0].transcript)
+
+    transcripts = [result.alternatives[0].transcript for result in response.results]
     return " ".join(transcripts)

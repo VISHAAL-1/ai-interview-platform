@@ -60,30 +60,67 @@ async def list_questions(level: int = 1, limit: int = 10):
         return questions
 
 async def get_user_interview_stats(user_id: int):
-    """Calculates and returns interview statistics for the Profile page."""
+    """Returns summary + full evaluation history for Profile page."""
     async with async_session() as session:
-        q_stats = await session.execute(
+
+        # --- Summary ---
+        q_summary = await session.execute(
             select(
-                func.count(Interview.id).label('total_interviews'),
-                func.avg(Interview.score).label('avg_score')
-            ).where(Interview.user_id == user_id)
-        )
-        stats = q_stats.one_or_none()
-
-        total_interviews = stats.total_interviews if stats else 0
-        avg_score = float(stats.avg_score) if stats and stats.avg_score is not None else 0.0
-
-        q_latest = await session.execute(
-            select(Interview.feedback)
+                func.count(Evaluation.id),
+                func.avg(Evaluation.correctness_score),
+                func.avg(Evaluation.fluency_score),
+                func.avg(Evaluation.combined_score),
+            ).join(Interview, Evaluation.interview_id == Interview.id)
             .where(Interview.user_id == user_id)
-            .where(Interview.feedback != None) 
-            .order_by(Interview.id.desc())
+        )
+        summary = q_summary.one_or_none()
+        total_interviews = summary[0] or 0
+        avg_correctness = float(summary[1] or 0)
+        avg_fluency = float(summary[2] or 0)
+        avg_combined = float(summary[3] or 0)
+
+        # --- Last Feedback ---
+        q_latest_feedback = await session.execute(
+            select(Evaluation.feedback)
+            .join(Interview, Evaluation.interview_id == Interview.id)
+            .where(Interview.user_id == user_id)
+            .order_by(Evaluation.created_at.desc())
             .limit(1)
         )
-        latest_feedback = q_latest.scalars().first()
-        
+        last_feedback = q_latest_feedback.scalars().first() or "No interviews yet."
+
+        # --- Full History ---
+        q_history = await session.execute(
+            select(Evaluation)
+            .join(Interview, Evaluation.interview_id == Interview.id)
+            .where(Interview.user_id == user_id)
+            .order_by(Evaluation.created_at.desc())
+        )
+        history = q_history.scalars().all()
+
         return {
             "total_interviews": total_interviews,
-            "avg_score": avg_score,
-            "last_feedback": latest_feedback if latest_feedback else "No interviews completed yet."
+            "avg_correctness": avg_correctness,
+            "avg_fluency": avg_fluency,
+            "avg_combined": avg_combined,
+            "last_feedback": last_feedback,
+            "history": history,
         }
+
+
+from .models import Evaluation
+
+async def save_evaluation(interview_id: int, question_text: str, eval_data: dict):
+    async with async_session() as session:
+        evaluation = Evaluation(
+            interview_id=interview_id,
+            question_text=question_text,
+            correctness_score=eval_data["correctness_score"],
+            fluency_score=eval_data["fluency_score"],
+            combined_score=eval_data["combined_score"],
+            feedback=eval_data["feedback"],
+        )
+        session.add(evaluation)
+        await session.commit()
+        await session.refresh(evaluation)
+        return evaluation

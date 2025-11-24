@@ -46,3 +46,23 @@ class ProfileStatsOut(BaseModel):
     total_interviews: int
     avg_score: float
     last_feedback: str
+
+class EvaluationOut(BaseModel):
+    id: int
+    question_text: str
+    correctness_score: float
+    fluency_score: float
+    combined_score: float
+    feedback: str
+    created_at: datetime.datetime
+
+    class Config:
+        orm_mode = True
+
+class ProfileFullOut(BaseModel):
+    total_interviews: int
+    avg_correctness: float
+    avg_fluency: float
+    avg_combined: float
+    last_feedback: str
+    history: List[EvaluationOut]
